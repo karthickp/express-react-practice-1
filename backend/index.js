@@ -9,9 +9,11 @@ const sequelize = new Sequelize({
   storage: './database.sqlite'
 });
 
-// Import Dog model
+// Import models
 const Dog = require('./models/Dog')(sequelize, DataTypes);
+const Task = require('./models/Task')(sequelize, DataTypes);
 const dogRoutes = require('./routes/dogs')(Dog);
+const taskRoutes = require('./routes/tasks')(Task);
 
 // Middleware
 app.use(cors());
@@ -19,6 +21,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api', dogRoutes);
+app.use('/api', taskRoutes);
+app.use('/', taskRoutes);
 
 // Sync database and start server
 const PORT = 3000;
